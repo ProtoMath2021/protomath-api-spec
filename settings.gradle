@@ -1,0 +1,3 @@
+rootProject.name = 'protomath-api-spec'
+include 'test'
+
