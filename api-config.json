@@ -1,0 +1,10 @@
+{
+  "packageName": "com.protomath",
+  "dateLibrary": "java8",
+  "interfaceOnly": true,
+  "useTags": true,
+  "apiFirst": true,
+  "singleContentTypes": true,
+  "useSpringController": true,
+  "modelNameSuffix": "Dto"
+}

@@ -1,0 +1,38 @@
+openapi: 3.0.3
+
+info:
+  title: protomath-api
+  description: api
+  version: 0.0.1
+
+paths:
+  /teachers/{id}/statistics:
+    get:
+      tags:
+        - getTeacherStats
+      description: Статистика учителя
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: res
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: Статы
+          content:
+            application/json:
+              schema:
+                title: Stats
+                type: object
+                properties:
+                  test:
+                    description: test
+                    type: string
+
+
