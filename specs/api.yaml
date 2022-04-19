@@ -6,33 +6,451 @@ info:
   version: 0.0.1
 
 paths:
-  /teachers/{id}/statistics:
-    get:
+
+  #  TeacherController
+  /teachers/{tId}/lessons:
+    post:
       tags:
-        - getTeacherStats
-      description: Статистика учителя
+        - TeacherController
+      description: Создать урок учителю
       parameters:
-        - name: id
+        - name: tId
+          description: Id учителя
           in: path
           required: true
           schema:
-            type: string
-        - name: res
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Lesson"
+      responses:
+        200:
+          description: Ok
+    get:
+      tags:
+        - TeacherController
+      description: Уроки учителя
+      parameters:
+        - name: tId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Уроки
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Lesson"
+
+  /teachers/{tId}/lessons/{lId}:
+    get:
+      tags:
+        - TeacherController
+      description: Конкретный урок учителя
+      parameters:
+        - name: tId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: lId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Урок
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Lesson"
+    patch:
+      tags:
+        - TeacherController
+      description: Обновить запланированный урок
+      parameters:
+        - name: tId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: lId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Lesson"
+      responses:
+        200:
+          description: Ok
+
+  /teachers/{tId}/subjects:
+    get:
+      tags:
+        - TeacherController
+      description: Список предметов учителя
+      parameters:
+        - name: tId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Список предметов
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+
+  /teachers/{tId}/students:
+    get:
+      tags:
+        - TeacherController
+      description: Список студентов учителя
+      parameters:
+        - name: tId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Список студентов преподавателя
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Student"
+    post:
+      tags:
+        - TeacherController
+      description: Добавить студента преподавателю
+      parameters:
+        - name: tId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Student"
+      responses:
+        200:
+          description: ОК
+
+  #  LessonController
+  /lessons/search:
+    post:
+      tags:
+        - LessonController
+      description: Поиск уроков
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LessonSearch"
+      responses:
+        200:
+          description: Список уроков
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Lesson"
+
+  #  StudentController
+  /students:
+    get:
+      tags:
+        - StudentController
+      description: Получить студента
+      parameters:
+        - name: studentId
           in: query
-          required: false
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Студент
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Student"
+    post:
+      tags:
+        - StudentController
+      description: Новый студент
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LessonSearch"
+      responses:
+        200:
+          description: Ok
+
+  /students/{studentId}/learning-path:
+    get:
+      tags:
+        - StudentController
+      description: Получить учебный план
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Учебный план
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LearningPath"
+    post:
+      tags:
+        - StudentController
+      description: Создать учебный план
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LearningPath"
+      responses:
+        200:
+          description: Ok
+
+    patch:
+      tags:
+        - StudentController
+      description: Редактировать учебный план
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LearningPath"
+      responses:
+        200:
+          description: Ok
+
+  #  TopicController
+  /topics:
+    get:
+      tags:
+        - TopicController
+      description: Получить список топиков
+      parameters:
+        - name: level
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: subject
+          in: query
+          required: true
           schema:
             type: string
       responses:
         200:
-          description: Статы
+          description: Список топиков
           content:
             application/json:
               schema:
-                title: Stats
-                type: object
-                properties:
-                  test:
-                    description: test
-                    type: string
+                $ref: "#/components/schemas/Topic"
+
+  /topics/{topicId}/subtopics:
+    get:
+      tags:
+        - TopicController
+      description: Получить список сабтопиков
+      parameters:
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Список сабтопиков
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Subtopic"
+
+  /topics/{topicId}/subtopics/{subtopicId}/cards:
+    get:
+      tags:
+        - TopicController
+      description: Получить список карточек
+      parameters:
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: subtopicId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Список сабтопиков
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Card"
+
+
+
+components:
+  schemas:
+    Topic:
+      title: Topic
+      type: object
+      properties:
+        name:
+          type: string
+        level:
+          type: string
+        subject:
+          type: string
+        subtopics:
+          type: array
+          items:
+            $ref: "#/components/schemas/Subtopic"
+    LearningPath:
+      title: LearningPath
+      type: object
+      properties:
+        name:
+          type: string
+    LessonSearch:
+      title: LessonSearch
+      type: object
+      properties:
+        name:
+          type: string
+        passed:
+          type: boolean
+        studentId:
+          type: integer
+        status:
+          type: string
+    Lesson:
+      title: Lesson
+      type: object
+      properties:
+        id:
+          type: integer
+        plannedDateTime:
+          type: string
+          format: date
+          description: запланированное время
+        student:
+          $ref: "#/components/schemas/Student"
+        teacher:
+          $ref: "#/components/schemas/Teacher"
+        status:
+          type: string
+          enum:
+            - planned
+            - canceled
+            - finished
+            - missed
+        subject:
+          type: string
+        lessonType:
+          type: string
+          enum:
+            - SIMPLE
+            - HOME_TASK
+            - TEST
+            - EXAM_SIMULATION
+            - WRITING_TASK
+        subtopics:
+          type: array
+          items:
+            $ref: "#/components/schemas/Subtopic"
+    Student:
+      title: Student
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        level:
+          type: string
+    Teacher:
+      title: Teacher
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    Subtopic:
+      title: Subtopic
+      type: object
+      properties:
+        name:
+          type: string
+        author:
+          type: string
+        card:
+          type: array
+          items:
+            $ref: "#/components/schemas/Card"
+    Card:
+      title: Card
+      type: object
+      properties:
+        name:
+          type: string
+        payload:
+          type: string
 
 

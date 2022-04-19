@@ -1,10 +1,13 @@
 {
-  "packageName": "com.protomath",
+  "basePackage": "com.protomath",
+  "apiPackage": "com.protomath.api",
+  "modelPackage": "com.protomath.model",
   "dateLibrary": "java8",
   "interfaceOnly": true,
   "useTags": true,
-  "apiFirst": true,
-  "singleContentTypes": true,
-  "useSpringController": true,
+  "apiFirst": false,
+  "gradleBuildFile": false,
+  "skipDefaultInterface": true,
+  "openApiNullable": false,
   "modelNameSuffix": "Dto"
 }

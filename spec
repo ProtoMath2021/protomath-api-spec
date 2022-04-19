@@ -81,7 +81,6 @@ teachers/{tid}/lessons/{lid}
   subTopics: []
 }
 
-// учитель статы
 
 
 // поиск

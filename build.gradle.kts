@@ -4,9 +4,11 @@ plugins {
 }
 
 openApiGenerate {
-    generatorName.set("kotlin-spring")
+    generatorName.set("spring")
     inputSpec.set("$rootDir/specs/api.yaml")
     templateDir.set("${rootDir}/template")
+    outputDir.set("$buildDir/generated")
     configFile.set("$rootDir/api-config.json")
+    typeMappings.set(mapOf("integer" to "Long"))
     validateSpec.set(true)
 }
