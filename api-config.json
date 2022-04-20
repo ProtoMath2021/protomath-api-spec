@@ -6,8 +6,8 @@
   "interfaceOnly": true,
   "useTags": true,
   "apiFirst": false,
-  "gradleBuildFile": false,
   "skipDefaultInterface": true,
   "openApiNullable": false,
+  "generateSupportingFiles": false,
   "modelNameSuffix": "Dto"
 }
