@@ -12,7 +12,7 @@ allprojects {
 }
 
 group = "com.protomath"
-version = "0.0.2"
+version = "0.0.5"
 
 openApiGenerate {
     generatorName.set("spring")
@@ -39,12 +39,23 @@ dependencies {
 }
 
 java {
+    withJavadocJar()
     withSourcesJar()
 }
 
 publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/protomath2021/protomath-api-spec")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+            }
+        }
+    }
     publications {
-        register("mavenJava", MavenPublication::class) {
+        register<MavenPublication>("gpr") {
             from(components["java"])
         }
     }
