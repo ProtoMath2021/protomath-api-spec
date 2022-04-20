@@ -1,14 +1,18 @@
 plugins {
     id("org.openapi.generator") version "5.4.0"
     `java-library`
+    `maven-publish`
 }
 
 allprojects {
     repositories {
+        mavenLocal()
         mavenCentral()
     }
 }
 
+group = "com.protomath"
+version = "0.0.2"
 
 openApiGenerate {
     generatorName.set("spring")
@@ -32,4 +36,16 @@ dependencies {
     implementation("org.springframework:spring-context:5.3.19")
     implementation("org.springframework:spring-web:5.3.19")
     compileOnly("javax.servlet:servlet-api:2.5")
+}
+
+java {
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        register("mavenJava", MavenPublication::class) {
+            from(components["java"])
+        }
+    }
 }
