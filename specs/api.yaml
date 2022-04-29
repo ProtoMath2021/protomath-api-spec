@@ -92,7 +92,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Lesson"
+              $ref: "#/components/schemas/LessonUpdate"
       responses:
         200:
           description: Ok
@@ -379,6 +379,52 @@ components:
           type: integer
         status:
           type: string
+    LessonUpdate:
+      title: LessonUpdate
+      type: object
+      properties:
+        plannedDateTime:
+          type: string
+          format: date
+          description: запланированное время
+        status:
+          type: string
+          enum:
+            - planned
+            - canceled
+            - finished
+            - missed
+    LessonCreate:
+      title: LessonCreate
+      type: object
+      properties:
+        plannedDateTime:
+          type: string
+          format: date
+          description: запланированное время
+        studentId:
+          type: integer
+        teacherId:
+          type: integer
+        subject:
+          type: string
+        lessonType:
+          type: string
+          enum:
+            - SIMPLE
+            - HOME_TASK
+            - TEST
+            - EXAM_SIMULATION
+            - WRITING_TASK
+        subtopics:
+          type: object
+          properties:
+            subtopicId:
+              type: array
+              items:
+                type: integer
+          items:
+            $ref: "#/components/schemas/Subtopic"
     Lesson:
       title: Lesson
       type: object
@@ -436,6 +482,8 @@ components:
       title: Subtopic
       type: object
       properties:
+        id:
+          type: integer
         name:
           type: string
         author:
@@ -448,6 +496,8 @@ components:
       title: Card
       type: object
       properties:
+        id:
+          type: integer
         name:
           type: string
         payload:

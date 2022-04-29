@@ -12,7 +12,7 @@ allprojects {
 }
 
 group = "com.protomath"
-version = "0.0.5"
+version = "0.0.6-SNAPSHOT-1"
 
 openApiGenerate {
     generatorName.set("spring")
