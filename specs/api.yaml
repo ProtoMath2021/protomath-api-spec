@@ -8,6 +8,26 @@ info:
 paths:
 
   #  TeacherController
+  /teachers/{tId}/info:
+    get:
+      tags:
+        - TeacherController
+      description: Инфо учителя
+      parameters:
+        - name: tId
+          description: Id учителя
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Инфо учителя
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Teacher"
+
   /teachers/{tId}/lessons:
     post:
       tags:
