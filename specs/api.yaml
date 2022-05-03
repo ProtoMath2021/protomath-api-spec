@@ -208,7 +208,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/LessonSearch"
+              $ref: "#/components/schemas/Student"
       responses:
         200:
           description: Ok
@@ -294,7 +294,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Topic"
+                type: array
+                items:
+                  $ref: "#/components/schemas/Topic"
 
   /topics/{topicId}/subtopics:
     get:
@@ -332,7 +334,7 @@ paths:
           in: path
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         200:
           description: Список сабтопиков
